@@ -1,0 +1,94 @@
+# Full training updates projection, text model, and vision encoder together.
+train:
+  output_dir: outputs/trained_models/full_model_training
+  model_save_subfolder: model
+  implementation: hydra_gemma_from_flex
+  # Required. Point to a multimodal checkpoint assembled by create_mm_hydra_gemma.py.
+  # model_name_or_path: outputs/models/mm/gemma3_270m/model
+  tokenizer_name_or_path: null
+  # timestamp_override: "20260907_120000"
+  max_steps: 2500
+  multimodal: true
+  seq_len: 3072
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 64
+
+  # Learning rates only apply to entries listed in train_model_parts.
+  text_model_lr: 2.0e-5
+  projection_lr: 2.0e-4
+  vision_encoder_lr: 6.0e-6
+
+  weight_decay: 0.1
+  lr_scheduler_type: cosine
+  warmup:
+    text_model:
+      ratio: null
+      steps: 75
+    projection:
+      steps: 25
+      ratio: null
+    vision_encoder:
+      ratio: null
+      steps: 75
+
+  max_grad_norm_enabled: true
+  max_grad_norm: 1.0
+
+  ema:
+    enabled: true
+    decay: 0.99
+  exclude_wd_norms_embeddings: false
+  dtype: bf16
+  deepspeed: train_unified/configs/ds_projector_stage1.json
+  attn_implementation: auto
+  gradient_checkpointing: true
+  logging_steps: 1
+  save_steps: 500
+  save_total_limit: 20
+  report_to: [tensorboard]
+  seed: 42
+  # head_weights controls relative sampling probability and must match heads.
+  heads: [1, 2, 3, 4]
+  head_weights: [1, 1, 1, 1]
+  dataloader_num_workers: 0
+
+  # Valid parts: projection, text_model, vision_encoder.
+  train_model_parts:
+    - projection
+    - text_model
+    - vision_encoder
+
+  loss:
+    # Options: ce, ce_plus_z, z_only.
+    type: ce_plus_z
+    z_loss_alpha: 1.0e-5
+
+  teacher:
+    enabled: true
+    model_name_or_path: google/gemma-3-4b-pt
+    implementation: auto_model
+    attn_implementation: auto
+    dtype: auto
+    temperature: 2.0
+    weight: 0.2
+    kd_every_n_steps: 1
+    compile: false
+    device_map: null
+    trust_remote_code: true
+
+  dataset:
+    parquet_path: data/unified_dataset_experiments_v4/parquet
+    split: train
+    # image_path values in the parquet are resolved relative to images_root.
+    images_root: data/unified_dataset_experiments_v4/images
+    # Optional debug cap; null cycles through the complete dataset.
+    max_samples_per_rank: null
+    log:
+      enabled: false
+      every_n_batches: 20
+      max_prints: 16
+      rank0_only: false
+      print_raw_samples: false
+      print_full_decoded: true
+      print_loss_decoded: false
+      max_text_chars: 20000

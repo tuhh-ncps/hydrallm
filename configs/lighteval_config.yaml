@@ -1,0 +1,39 @@
+lighteval:
+  # Format: "suite|task|few_shots", separated by commas.
+  tasks: "leaderboard|hellaswag|10,lighteval|arc:easy|0,lighteval|triviaqa|5"
+  # null creates the standard timestamped output directory.
+  output_dir: null
+  launcher_type: ACCELERATE
+  # Set this to a small integer for a quick smoke test.
+  max_samples: null
+  # Use the repository's custom model wrapper. Set false for upstream Transformers.
+  custom: true
+  model:
+    # Required. A Hugging Face model ID or local checkpoint directory.
+    # model_name: outputs/final_trained_llms/example/model
+    tokenizer: null
+    subfolder: null
+    revision: main
+    batch_size: 1
+    max_length: null
+    add_special_tokens: true
+    skip_special_tokens: true
+    model_parallel: false
+    dtype: bfloat16
+    device: cuda
+    trust_remote_code: false
+    compile: false
+    override_chat_template: null
+    pairwise_tokenization: false
+    continuous_batching: false
+    implementation: hydra_gemma_from_flex
+    # Use "auto" when FlashAttention 2 is not installed.
+    attn_implementation: flash_attention_2
+    current_num_heads: null
+    # A scalar applies globally; a list supplies one ratio per layer.
+    ffn_granularity_ratio: null
+    generation_parameters:
+      max_new_tokens: 64
+      temperature: 0.0
+      top_p: 0.95
+      top_k: 64

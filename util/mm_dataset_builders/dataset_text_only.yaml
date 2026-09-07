@@ -1,0 +1,102 @@
+seed: 42
+
+output:
+  output_dir: /home/oscar_while/coding/datasets/unified_dataset_text_only_v1
+  num_shards: 512
+  buffer_size: 50000          # global buffer before flush (shuffle-ish)
+  compression: zstd
+
+image_store:
+  dir: images                 # under output_dir
+  hash: sha256
+
+start_of_image_token: "<start_of_image>"
+
+datasets:
+
+  # pixmo_cap:
+  #   type: pixmo_caption
+  #   path: /mnt/data3tb/coding/datasets/pixmo-cap
+  #   num_samples: 622304
+
+  # coco_recaptioned:
+  #   type: coco_recaptioned
+  #   path: /mnt/data3tb/coding/datasets/coco-recaptioned/
+  #   num_samples: 118287
+  #   # If your coco_captions.json uses different keys, set these:
+  #   # image_field: image
+  #   # caption_field: caption
+
+  # llava_pretrain:
+  #   type: llava_pretrain
+  #   path: /mnt/data3tb/coding/datasets/llava_pretrain_558k
+  #   num_samples: 558128
+  #   json_file: blip_laion_cc_sbu_558k.json
+
+  # pixmo_ask_model_anything:
+  #   type: pixmo_qa
+  #   path: /mnt/data3tb/coding/datasets/pixmo_ask_model_anything2
+  #   num_samples: 138021
+  #   prompt:
+  #     include_question: true          # if false => prompt is just <start_of_image>
+  #   target:
+  #     from: answer                    # (fixed for this dataset)
+
+  # pixmo_cap_qa:
+  #   type: pixmo_cap_qa
+  #   path: /mnt/data3tb/coding/datasets/pixmo_cap_qa
+  #   num_samples: 165585
+
+  # cosyn_400k_vqa:
+  #   type: cosyn_400k
+  #   path: /mnt/data3tb/coding/datasets/cosyn_400k
+  #   split: train
+  #   per_subset:
+  #     chart: 116814
+  #     chemical: 8942
+  #     circuit: 10470
+  #     diagram: 34963
+  #     document: 71282
+  #     graphic: 26968
+  #     math: 66714
+  #     music: 11969
+  #     nutrition: 6931
+  #     table: 46518
+
+  #   tasks:
+  #     vqa:
+  #       enabled: true
+  #       target_format: "reasoning_answer"   # Reasoning: ... \n\n Answer: ...
+
+  # cosyn_400k_code:
+  #   type: cosyn_400k
+  #   path: /mnt/data3tb/coding/datasets/cosyn_400k
+  #   split: train
+  #   per_subset:
+  #     chart: 116814
+  #     chemical: 8942
+  #     circuit: 10470
+  #     diagram: 34963
+  #     document: 71282
+  #     graphic: 26968
+  #     math: 66714
+  #     music: 11969
+  #     nutrition: 6931
+  #     table: 46518
+  #   tasks:
+  #     code_generation:
+  #       enabled: true
+  #       prompts:
+  #         - "Provide the code to create this figure."
+  #         - "Generate code that reproduces this image."
+  #         - "Write code that renders the visual shown."
+
+  wikipedia_en:
+    type: hf_text
+    path: /mnt/data3tb/coding/datasets/wikipedia_text/20231101.en
+    num_samples: 160000
+
+  fineweb_edu_10bt:
+    type: hf_text
+    path: /mnt/data3tb/coding/datasets/fineweb_edu
+    num_samples: 160000

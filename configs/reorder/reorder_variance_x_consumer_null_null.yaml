@@ -1,0 +1,30 @@
+sorting:
+  model_id: google/gemma-3-270m
+  save_dir: outputs/reordered_llms/reordered_new_variance_x_consumers_null_null
+  # dtype: auto | float32 | bfloat16 | float16
+  dtype: auto
+  # device examples: auto, cpu, cuda, mps, cuda:0
+  device: auto
+  device_map: auto
+  calibration_file: data/calibration/calibration.txt
+  chunk_len: 2048
+
+  # null leaves that component in its original order.
+  heads_metric: variance_x_consumers
+  neurons_metric: null
+  embeddings_metric: null
+  top_k: 3
+  postcheck: true
+
+# Run separately with: python plot_importance.py -c <this-file>
+plot_importance:
+  # Required. Use the timestamped model directory produced by sort_llm.py.
+  # model_path: outputs/reordered_llms/reordered_new_variance_x_consumers_null_null_YYYYMMDD_HHMMSS/model
+  out_dir: outputs/importance_analysis/variance_x_consumers_null_null
+  calibration_file: data/calibration/calibration.txt
+  chunk_len: 2048
+  device: auto
+  dtype: auto
+  heads_metric: variance_x_consumers
+  neurons_metric: null
+  embeddings_metric: null

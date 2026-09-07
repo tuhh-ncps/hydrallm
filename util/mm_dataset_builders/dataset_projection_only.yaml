@@ -1,0 +1,28 @@
+seed: 42
+
+output:
+  output_dir: /home/oscar_while/coding/datasets/unified_projection_dataset
+  num_shards: 1024
+  buffer_size: 50000          # global buffer before flush (shuffle-ish)
+  compression: zstd
+
+image_store:
+  dir: images                 # under output_dir
+  hash: sha256
+
+start_of_image_token: "<start_of_image>"
+
+datasets:
+
+  pixmo_cap:
+    type: pixmo_caption
+    path: /mnt/data3tb/coding/datasets/pixmo-cap
+    num_samples: 64000
+
+  coco_recaptioned:
+    type: coco_recaptioned
+    path: /mnt/data3tb/coding/datasets/coco-recaptioned/
+    num_samples: 64000
+    # If your coco_captions.json uses different keys, set these:
+    # image_field: image
+    # caption_field: caption

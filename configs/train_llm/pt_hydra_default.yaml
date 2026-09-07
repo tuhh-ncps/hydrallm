@@ -1,0 +1,89 @@
+project:
+  data_dir: data
+  outputs_dir: outputs
+  tmp_dir: .cache
+
+# Hydra training samples one of the configured attention-head widths per step.
+training:
+  implementation: hydra_gemma_from_flex
+  model_name_or_path: google/gemma-3-270m
+  # null uses the tokenizer shipped with model_name_or_path.
+  tokenizer_name_or_path: null
+  output_dir: outputs/final_trained_llms/pt_hydra_default
+  # Reuse an existing run directory when resuming, for example:
+  # timestamp_override: "20260907_120000"
+  seq_len: 3072
+  num_samples: 2000000
+  learning_rate: 3e-4
+  weight_decay: 0.1
+  lr_scheduler_type: cosine
+  warmup_ratio: 0.01
+  warmup_steps: null
+  max_steps: 20000
+  max_grad_norm_enabled: true
+  max_grad_norm: 1.0
+  gradient_accumulation_steps: 8
+  per_device_train_batch_size: 1
+  exclude_wd_norms_embeddings: false
+  fp16: false
+  bf16: true
+  deepspeed: train_llm/configs/ds_config_optimized.json
+  gradient_checkpointing: true
+  # Use auto when FlashAttention 2 is not installed.
+  attn_implementation: flash_attention_2
+  # head_weights controls relative sampling probability and must match heads.
+  heads: [1, 2, 3, 4]
+  head_weights: [1, 1, 1, 3]
+  seed: 42
+  report_to: [tensorboard]
+  # null places TensorBoard logs under the timestamped run directory.
+  logging_dir: null
+  logging_steps: 1
+  save_steps: 5000
+  save_total_limit: 1000
+  loss:
+    type: ce_plus_z
+    z_loss_alpha: 1.0e-5
+  teacher:
+    enabled: true
+    model_name_or_path: google/gemma-3-270m
+    implementation: auto_model
+    attn_implementation: auto
+    dtype: auto
+    temperature: 2.0
+    weight: 0.1
+    kd_every_n_steps: 1
+    compile: false
+  ema:
+    enabled: true
+    decay: 0.999
+  dataset:
+    # packed_disk reads pre-tokenized blocks from data_dir. If missing and
+    # prepare_if_missing is true, the Hugging Face fields below build them.
+    source: packed_disk
+    data_dir: data/fineweb/edu_350BT_3072
+    prepare_if_missing: true
+    hf_dataset: HuggingFaceFW/fineweb-edu
+    hf_name: sample-350BT
+    use_full: false
+    hf_split: train
+    text_field: text
+    cache_dir: .cache
+    streaming_buffer_size: 100000
+    initial_random_skip_tokens: 0
+    max_blocks: null
+    num_proc: 4
+  dataloader_num_workers: 0
+  dataloader_persistent_workers: true
+  dataloader_prefetch_factor: 2
+  evaluation:
+    enabled: false
+    # auto selects a held-out source appropriate for the configured dataset.
+    eval_on: auto
+    eval_steps: 5
+    eval_max_blocks: 512
+    eval_split_ratio: 0.01
+
+data:
+  cache_dir: .cache
+  seed: 42

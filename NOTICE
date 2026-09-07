@@ -1,0 +1,10 @@
+HydraLLM
+Copyright 2026 HydraLLM contributors
+
+Portions of the evaluation integration are derived from LightEval.
+Copyright (c) 2024 The HuggingFace Team. Used under the MIT License; the full
+license notice is retained in the relevant source files.
+
+Portions of the Gemma 3 model implementation are derived from Transformers.
+Copyright 2025 Google Inc. HuggingFace Inc. team. Used under the Apache License
+2.0; the license notice is retained in the relevant source file.

@@ -1,0 +1,60 @@
+# ===========================================
+# Environment & Config Files
+# ===========================================
+.env
+.venv/
+# config.yaml
+.cache/
+.vscode/
+.idea/
+
+# ===========================================
+# Model Weights / Intermediate Data
+# ===========================================
+*.pth
+*.bin
+*.safetensors
+
+# ===========================================
+# Generated Outputs & Artifacts
+# ===========================================
+outputs/
+sorting_llm/__pycache__/
+sorting_llm/*.pyc
+/data/*
+!/data/calibration/
+!/data/calibration/calibration.txt
+
+# Postcheck and reordered model directories (legacy or current)
+sorting_llm/postcheck_original/
+sorting_llm/postcheck_reordered/
+sorting_llm/reordered_model/
+
+# ===========================================
+# Miscellaneous / Temporary Files
+# ===========================================
+.old/
+tmp/
+nohup.out
+.DS_Store
+__pycache__/
+trained_models/
+*.log
+*.tmp
+*.swp
+*.bak
+
+# ===========================================
+# Dataset Caches / External Resources
+# ===========================================
+/data/downloads/
+/data/tmp/
+/data/cache/
+huggingface/
+hf_cache/
+
+/results
+/plots/
+
+
+/playground/

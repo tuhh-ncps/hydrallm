@@ -1,0 +1,66 @@
+sorting:
+  model_id: google/gemma-3-270m
+  save_dir: outputs/reordered_llms/reorder_cett_normalized_cett_normalized_magnitude
+  dtype: auto
+  device: auto
+  device_map: auto
+  calibration_file: data/calibration/calibration.txt
+  chunk_len: 2048
+
+  # Metric options for heads/neurons: magnitude, variance_x_consumers, cett,
+  # cett_normalized, cett_variance, or null. Embeddings support the first two.
+  heads_metric: cett_normalized
+  neurons_metric: cett_normalized
+  embeddings_metric: magnitude
+
+  top_k: 3
+  postcheck: true
+
+  # Tail reporting only applies to components using cett_normalized.
+  cett_tail_curve: false
+  cett_error_bound: 0.2
+  cett_tail_prune_fracs: [0.25, 0.50, 0.75, 0.90]
+
+  plot_scales:
+    heads_heatmap:
+      vmin: 0.2
+      vmax: 0.8
+    neurons_group_heatmap:
+      vmin: 0.002
+      vmax: 0.015
+    embeddings_grouped_bar:
+      ymin: 0
+      ymax: 60000000
+    # Additional scale examples:
+    # heads_heatmap: {vmin: 0, vmax: 1.0}
+    # heads_bar: {ymin: 0.0, ymax: 1.0}
+    # neurons_line: {ymin: 1e-5, ymax: 1e-1, log: true}
+    # neurons_group_heatmap: {vmin: 0.001, vmax: 0.02}
+    # neurons_grouped_bar: {ymin: 0.0, ymax: 0.03}
+    # embeddings_line: {ymin: 0.0, ymax: 0.01, log: false}
+    # embeddings_grouped_bar: {ymin: 0.0, ymax: 0.01}
+
+# Run separately with: python plot_importance.py -c <this-file>
+plot_importance:
+  # Required. Use the timestamped model directory produced by sort_llm.py.
+  # model_path: outputs/reordered_llms/reorder_cett_normalized_cett_normalized_magnitude_YYYYMMDD_HHMMSS/model
+  out_dir: outputs/importance_analysis/cett_normalized_cett_normalized_magnitude
+  calibration_file: data/calibration/calibration.txt
+  chunk_len: 2048
+  device: auto
+  dtype: auto
+  heads_metric: cett_normalized
+  neurons_metric: cett_normalized
+  embeddings_metric: magnitude
+  cett_tail_prune_fracs: [0.25, 0.50, 0.75, 0.90]
+  cett_error_bound: 0.2
+  plot_scales:
+    heads_heatmap:
+      vmin: 0.2
+      vmax: 0.8
+    neurons_group_heatmap:
+      vmin: 0.002
+      vmax: 0.015
+    embeddings_grouped_bar:
+      ymin: 0
+      ymax: 60

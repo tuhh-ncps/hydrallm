@@ -1,0 +1,48 @@
+sorting:
+  model_id: google/gemma-3-270m
+  save_dir: outputs/reordered_llms/reordered_new_magnitude_magnitude_magnitude
+  dtype: auto
+  device: auto
+  device_map: auto
+  calibration_file: data/calibration/calibration.txt
+  chunk_len: 2048
+
+  heads_metric: magnitude
+  neurons_metric: magnitude
+  embeddings_metric: magnitude
+  top_k: 3
+  postcheck: true
+  # Plot scales affect the generated postcheck analysis only.
+  plot_scales:
+    heads_heatmap:
+      vmin: 0.2
+      vmax: 0.8
+    neurons_group_heatmap:
+      vmin: 0.002
+      vmax: 0.015
+    embeddings_grouped_bar:
+      ymin: 0
+      ymax: 60000000
+
+# Run separately with: python plot_importance.py -c <this-file>
+plot_importance:
+  # Required. Use the timestamped model directory produced by sort_llm.py.
+  # model_path: outputs/reordered_llms/reordered_new_magnitude_magnitude_magnitude_YYYYMMDD_HHMMSS/model
+  out_dir: outputs/importance_analysis/magnitude_magnitude_magnitude
+  calibration_file: data/calibration/calibration.txt
+  chunk_len: 2048
+  device: auto
+  dtype: auto
+  heads_metric: magnitude
+  neurons_metric: magnitude
+  embeddings_metric: magnitude
+  plot_scales:
+    heads_heatmap:
+      vmin: 5
+      vmax: 12
+    neurons_group_heatmap:
+      vmin: 0.2
+      vmax: 0.8
+    embeddings_grouped_bar:
+      ymin: 0
+      ymax: 60

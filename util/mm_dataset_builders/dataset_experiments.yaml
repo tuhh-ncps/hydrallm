@@ -1,0 +1,111 @@
+seed: 42
+
+output:
+  output_dir: /home/oscar_while/coding/datasets/unified_dataset_experiments_v4
+  num_shards: 1024
+  buffer_size: 50000          # global buffer before flush (shuffle-ish)
+  compression: zstd
+
+image_store:
+  dir: images                 # under output_dir
+  hash: sha256
+
+start_of_image_token: "<start_of_image>"
+
+datasets:
+
+  pixmo_cap:
+    type: pixmo_caption
+    path: /mnt/data3tb/coding/datasets/pixmo-cap
+    num_samples: 50000
+
+  coco_recaptioned:
+    type: coco_recaptioned
+    path: /mnt/data3tb/coding/datasets/coco-recaptioned/
+    num_samples: 12000
+    # If your coco_captions.json uses different keys, set these:
+    # image_field: image
+    # caption_field: caption
+
+  llava_pretrain:
+    type: llava_pretrain
+    path: /mnt/data3tb/coding/datasets/llava_pretrain_558k
+    num_samples: 50000
+    json_file: blip_laion_cc_sbu_558k.json
+
+#---------------- 112,000 ---------------------------------------------------------------
+
+  pixmo_ask_model_anything:
+    type: pixmo_qa
+    path: /mnt/data3tb/coding/datasets/pixmo_ask_model_anything2
+    num_samples: 30000
+    prompt:
+      include_question: true          # if false => prompt is just <start_of_image>
+    target:
+      from: answer                    # (fixed for this dataset)
+
+  pixmo_cap_qa:
+    type: pixmo_cap_qa
+    path: /mnt/data3tb/coding/datasets/pixmo_cap_qa
+    num_samples: 30000
+
+#---------------- 60,000 ---------------------------------------------------------------
+
+  cosyn_400k_vqa:
+    type: cosyn_400k
+    path: /mnt/data3tb/coding/datasets/cosyn_400k
+    split: train
+    per_subset:
+      chart: 10000
+      chemical: 10000
+      circuit: 10000
+      diagram: 10000
+      document: 10000
+      graphic: 10000
+      math: 10000
+      music: 10000
+      nutrition: 10000
+      table: 10000
+
+    tasks:
+      vqa:
+        enabled: true
+        target_format: "reasoning_answer"   # Reasoning: ... \n\n Answer: ...
+
+  cosyn_400k_code:
+    type: cosyn_400k
+    path: /mnt/data3tb/coding/datasets/cosyn_400k
+    split: train
+    per_subset:
+      chart: 320
+      chemical: 320
+      circuit: 320
+      diagram: 320
+      document: 320
+      graphic: 320
+      math: 320
+      music: 320
+      nutrition: 320
+      table: 320
+    tasks:
+      code_generation:
+        enabled: true
+        prompts:
+          - "Provide the code to create this figure."
+          - "Generate code that reproduces this image."
+          - "Write code that renders the visual shown."
+
+#---------------- 103,200 ---------------------------------------------------------------
+
+  wikipedia_en:
+    type: hf_text
+    path: /mnt/data3tb/coding/datasets/wikipedia_text/20231101.en
+    num_samples: 14800
+
+  fineweb_edu_10bt:
+    type: hf_text
+    path: /mnt/data3tb/coding/datasets/fineweb_edu
+    num_samples: 30000
+
+#---------------- 44,800 ---------------------------------------------------------------
+

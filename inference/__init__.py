@@ -1,0 +1,1 @@
+from .core import run_inference_from_cfg

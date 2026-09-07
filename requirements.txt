@@ -1,0 +1,60 @@
+# --- Deep Learning & LLM Core ---
+torch==2.8.0 #2.9.1 #2.8.0
+torchvision==0.23.0 #0.24.1 #0.23.0
+transformers==4.56.1
+accelerate==1.10.1
+#deepspeed==0.18.4 #0.17.6
+psutil
+peft==0.17.1
+trl==0.23.1
+bitsandbytes==0.48.1; platform_system != "Darwin"
+wheel==0.46.3
+# flash_attn==2.8.3
+
+# --- Data Science & Visualization ---
+numpy==2.3.3
+pandas==2.3.2
+scipy==1.16.2
+scikit-learn==1.7.2
+matplotlib==3.10.6
+seaborn==0.13.2
+datasets==4.2.0
+webdataset==1.0.2
+
+# --- NLP & Tokenization ---
+spacy==3.8.7
+nltk==3.9.1
+stanza==1.11.0
+tiktoken==0.11.0
+sentencepiece==0.2.1
+jieba==0.42.1
+SudachiPy==0.6.10
+pythainlp==5.1.2
+pyvi==0.1.1
+human-eval==1.0.3
+
+# --- Evaluation & Metrics ---
+evaluate==0.4.6
+lighteval==0.11.0
+rouge_score==0.1.2
+sacrebleu==2.5.1
+sklearn-crfsuite==0.5.0
+
+# --- App, API & Utilities ---
+streamlit==1.51.0
+requests==2.32.5
+python-dotenv==1.1.1
+tqdm==4.67.1
+fire==0.7.1
+typer==0.19.2
+ninja==1.13.0
+pytest==8.4.2
+
+# --- Misc Utilities ---
+emoji==2.15.0
+jsonlines==4.0.0
+tabulate==0.9.0
+termcolor==2.3.0
+latex2sympy2_extended==1.0.6
+pycountry==24.6.1
+tensorboard==2.20.0

@@ -1,0 +1,102 @@
+seed: 42
+
+output:
+  output_dir: /home/oscar_while/coding/datasets/test
+  num_shards: 10
+  buffer_size: 50000          # global buffer before flush (shuffle-ish)
+  compression: zstd
+
+image_store:
+  dir: images                 # under output_dir
+  hash: sha256
+
+start_of_image_token: "<start_of_image>"
+
+datasets:
+
+  # pixmo_cap:
+  #   type: pixmo_caption
+  #   path: /mnt/data3tb/coding/datasets/pixmo-cap
+  #   num_samples: 1000
+
+  # coco_recaptioned:
+  #   type: coco_recaptioned
+  #   path: /mnt/data3tb/coding/datasets/coco-recaptioned/
+  #   num_samples: 1000
+  #   # If your coco_captions.json uses different keys, set these:
+  #   # image_field: image
+  #   # caption_field: caption
+
+  # llava_pretrain:
+  #   type: llava_pretrain
+  #   path: /mnt/data3tb/coding/datasets/llava_pretrain_558k
+  #   num_samples: 1000
+  #   json_file: blip_laion_cc_sbu_558k.json
+
+  # pixmo_ask_model_anything:
+  #   type: pixmo_qa
+  #   path: /mnt/data3tb/coding/datasets/pixmo_ask_model_anything2
+  #   num_samples: 1000
+  #   prompt:
+  #     include_question: true          # if false => prompt is just <start_of_image>
+  #   target:
+  #     from: answer                    # (fixed for this dataset)
+
+  # pixmo_cap_qa:
+  #   type: pixmo_cap_qa
+  #   path: /mnt/data3tb/coding/datasets/pixmo_cap_qa
+  #   num_samples: 1000
+
+  cosyn_400k_vqa:
+    type: cosyn_400k
+    path: /mnt/data3tb/coding/datasets/cosyn_400k
+    split: train
+    per_subset:
+      chart: 500
+      chemical: 500
+      circuit: 500
+      diagram: 500
+      document: 500
+      graphic: 500
+      math: 500
+      music: 500
+      nutrition: 500
+      table: 500
+
+    tasks:
+      vqa:
+        enabled: true
+        target_format: "reasoning_answer"   # Reasoning: ... \n\n Answer: ...
+
+  # cosyn_400k_code:
+  #   type: cosyn_400k
+  #   path: /mnt/data3tb/coding/datasets/cosyn_400k
+  #   split: train
+  #   per_subset:
+  #     chart: 50
+  #     chemical: 50
+  #     circuit: 50
+  #     diagram: 50
+  #     document: 50
+  #     graphic: 50
+  #     math: 50
+  #     music: 50
+  #     nutrition: 50
+  #     table: 50
+  #   tasks:
+  #     code_generation:
+  #       enabled: true
+  #       prompts:
+  #         - "Provide the code to create this figure."
+  #         - "Generate code that reproduces this image."
+  #         - "Write code that renders the visual shown."
+
+  # wikipedia_en:
+  #   type: hf_text
+  #   path: /mnt/data3tb/coding/datasets/wikipedia_text/20231101.en
+  #   num_samples: 900
+
+  # fineweb_edu_10bt:
+  #   type: hf_text
+  #   path: /mnt/data3tb/coding/datasets/fineweb_edu
+  #   num_samples: 1700

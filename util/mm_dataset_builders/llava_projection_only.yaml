@@ -1,0 +1,21 @@
+seed: 42
+
+output:
+  output_dir: /home/oscar_while/coding/datasets/unified_llava_projection_dataset
+  num_shards: 1024
+  buffer_size: 50000          # global buffer before flush (shuffle-ish)
+  compression: zstd
+
+image_store:
+  dir: images                 # under output_dir
+  hash: sha256
+
+start_of_image_token: "<start_of_image>"
+
+datasets:
+
+  llava_pretrain:
+    type: llava_pretrain
+    path: /mnt/data3tb/coding/datasets/llava_pretrain_558k
+    num_samples: 128000
+    json_file: blip_laion_cc_sbu_558k.json
