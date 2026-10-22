@@ -474,6 +474,25 @@ python -m pytest -q
 
 The tests cover global and per-layer MatFormer sampling, inference ratio normalization and validation, and mocked forwarding behavior that keeps the multimodal projector full-width while varying MatFormer FFN width.
 
+## Citation
+
+If you use HydraLLM in your research, please cite our paper:
+[HydraLLM: Adaptive Width Slicing for Elastic Text and Vision-Language Models](https://arxiv.org/abs/2610.23455).
+
+```bibtex
+@misc{kemme2026hydrallm,
+  title         = {{HydraLLM}: Adaptive Width Slicing for Elastic Text and Vision-Language Models},
+  author        = {Oscar Kemme and Janek Haberer and Ali Hojjat and Olaf Landsiedel},
+  year          = {2026},
+  eprint        = {2610.23455},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  doi           = {10.48550/arXiv.2610.23455},
+  url           = {https://arxiv.org/abs/2610.23455},
+  note          = {Accepted at the BabyLM Workshop at EMNLP 2026; proceedings forthcoming}
+}
+```
+
 ## License
 
 HydraLLM is licensed under the Apache License 2.0. See `LICENSE` and `NOTICE`.
