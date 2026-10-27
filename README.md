@@ -480,16 +480,30 @@ If you use HydraLLM in your research, please cite our paper:
 [HydraLLM: Adaptive Width Slicing for Elastic Text and Vision-Language Models](https://arxiv.org/abs/2610.23455).
 
 ```bibtex
-@misc{kemme2026hydrallm,
-  title         = {{HydraLLM}: Adaptive Width Slicing for Elastic Text and Vision-Language Models},
-  author        = {Oscar Kemme and Janek Haberer and Ali Hojjat and Olaf Landsiedel},
-  year          = {2026},
-  eprint        = {2610.23455},
-  archivePrefix = {arXiv},
-  primaryClass  = {cs.CL},
-  doi           = {10.48550/arXiv.2610.23455},
-  url           = {https://arxiv.org/abs/2610.23455},
-  note          = {Accepted at the BabyLM Workshop at EMNLP 2026; proceedings forthcoming}
+@inproceedings{kemme-etal-2026-hydrallm,
+    title = "{H}ydra{LLM}: Adaptive Width Slicing for Elastic Text and Vision-Language Models",
+    author = "Kemme, Oscar  and
+      Haberer, Janek  and
+      Hojjat, Ali  and
+      Landsiedel, Olaf",
+    editor = "Choshen, Leshem  and
+      Cotterell, Ryan  and
+      Gul, Mustafa Omer  and
+      Jumelet, Jaap  and
+      Linzen, Tal  and
+      Mueller, Aaron  and
+      Salhan, Suchir  and
+      Shah, Raj Sanjay  and
+      Warstadt, Alex  and
+      Wilcox, Ethan Gotlieb",
+    booktitle = "Proceedings of the Second {B}aby{LM} Workshop",
+    month = oct,
+    year = "2026",
+    address = "Budapest, Hungary",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.babylm-main.4/",
+    pages = "33--49",
+    ISBN = "979-8-89176-475-0",
 }
 ```
 
